@@ -1,0 +1,51 @@
+### model
+model_name_or_path: AesFormer_ICML2026/pretrained_weights/Qwen3-VL-8B-Instruct
+image_max_pixels: 1048576
+trust_remote_code: true
+
+### method
+stage: sft
+do_train: true
+finetuning_type: lora
+lora_rank: 8
+lora_target: all
+deepspeed: examples/deepspeed/ds_z3_config.json
+
+### dataset
+dataset: AesFormer_ICML2026/AesRecon_dataset/jsons/train/Stage1_a/train_Stage1_a
+template: qwen3_vl_nothink
+cutoff_len: 2048
+max_samples: 100000000
+overwrite_cache: true
+preprocessing_num_workers: 16
+dataloader_num_workers: 4
+
+### output
+output_dir: /path/to/your/Stage1_a_model/output_dir
+logging_steps: 10
+save_strategy: "epoch"
+save_steps: 500
+plot_loss: true
+overwrite_output_dir: true
+save_only_model: false
+
+### train
+per_device_train_batch_size: 2
+gradient_accumulation_steps: 8
+learning_rate: 1.0e-4
+num_train_epochs: 2.0
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+bf16: true
+ddp_timeout: 180000000
+resume_from_checkpoint: null
+
+### eval
+# val_size: 0.1
+# per_device_eval_batch_size: 1
+# eval_strategy: steps
+# eval_steps: 500
+
+add_special_tokens: "<Ratio>,</Ratio>,<Composition>,</Composition>,<Camera>,</Camera>,<Position>,</Position>,<Pose>,</Pose>,<Focus>,</Focus>,<Color>,</Color>"
+resize_vocab: true
+additional_target: embed_tokens,lm_head

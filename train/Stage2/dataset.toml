@@ -1,0 +1,12 @@
+[general]
+resolution = [1080, 1440]
+batch_size = 1
+enable_bucket = true
+bucket_no_upscale = false
+
+[[datasets]]
+image_jsonl_file = "AesFormer_ICML2026/AesRecon_dataset/jsons/train/Stage2/metadata.jsonl"
+cache_directory = "/path/to/your/Stage2_model/output_cache_dir"
+num_repeats = 1
+qwen_image_edit_no_resize_control = false
+qwen_image_edit_control_resolution = [1024, 1024]
